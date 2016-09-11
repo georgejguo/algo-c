@@ -2,7 +2,7 @@
 #include <string.h>
 #include "list.h"
 
-void list_init(list * list, void (*destroy) (void *data))
+void list_init(struct list *list, void (*destroy) (void *data))
 {
 	list->size = 0;
 	list->destroy = destroy;
@@ -10,7 +10,7 @@ void list_init(list * list, void (*destroy) (void *data))
 	list->tail = NULL;
 }
 
-void list_destroy(list * list)
+void list_destroy(struct list *list)
 {
 	void *data;
 
@@ -27,11 +27,13 @@ void list_destroy(list * list)
 /* Inserts an element just after 'element' in the linked list specified by list.
  * If element is NULL, the new element is inserted at the head of the list.
  */
-int list_ins_next(list * list, list_elmt * element, const void *data)
+int list_ins_next(struct list *list, struct list_elmt *element,
+		  const void *data)
 {
-	list_elmt *new_element;
+	struct list_elmt *new_element;
 
-	if ((new_element = (list_elmt *) malloc(sizeof(list_elmt))) == NULL)
+	if ((new_element =
+	     (struct list_elmt *)malloc(sizeof(struct list_elmt))) == NULL)
 		return -1;
 	new_element->data = (void *)data;
 
@@ -54,9 +56,9 @@ int list_ins_next(list * list, list_elmt * element, const void *data)
 /* Removes the element just after 'element' from the linked list specified by
  * list. If element is NULL, the element at the head of the list is removed.
  */
-int list_rem_next(list * list, list_elmt * element, void **data)
+int list_rem_next(struct list *list, struct list_elmt *element, void **data)
 {
-	list_elmt *old_element;
+	struct list_elmt *old_element;
 
 	if (list_size(list) == 0)
 		return -1;

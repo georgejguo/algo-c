@@ -2,14 +2,14 @@
 #include <string.h>
 #include "clist.h"
 
-void clist_init(clist * list, void (*destroy) (void *data))
+void clist_init(struct clist *list, void (*destroy) (void *data))
 {
 	list->size = 0;
 	list->destroy = destroy;
 	list->head = NULL;
 }
 
-void clist_destroy(clist * list)
+void clist_destroy(struct clist *list)
 {
 	void *data;
 
@@ -23,14 +23,16 @@ void clist_destroy(clist * list)
 		}
 	}
 
-	memset(list, 0, sizeof(clist));
+	memset(list, 0, sizeof(struct clist));
 }
 
-int clist_ins_next(clist * list, clist_elmt * element, const void *data)
+int clist_ins_next(struct clist *list, struct clist_elmt *element,
+		   const void *data)
 {
-	clist_elmt *new_element;
+	struct clist_elmt *new_element;
 
-	if ((new_element = (clist_elmt *) malloc(sizeof(clist_elmt))) == NULL)
+	if ((new_element =
+	     (struct clist_elmt *)malloc(sizeof(struct clist_elmt))) == NULL)
 		return -1;
 
 	new_element->data = (void *)data;
@@ -47,12 +49,11 @@ int clist_ins_next(clist * list, clist_elmt * element, const void *data)
 
 	list->size++;
 	return 0;
-
 }
 
-int clist_rem_next(clist * list, clist_elmt * element, void **data)
+int clist_rem_next(struct clist *list, struct clist_elmt *element, void **data)
 {
-	clist_elmt *old_element;
+	struct clist_elmt *old_element;
 
 	/* Do not allow removal from an empty list. */
 	if (clist_size(list) == 0)
@@ -75,6 +76,5 @@ int clist_rem_next(clist * list, clist_elmt * element, void **data)
 
 	free(old_element);
 	list->size--;
-
 	return 0;
 }

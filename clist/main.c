@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "list.h"
+#include "clist.h"
 
 void data_destroy(void *data)
 {
@@ -11,29 +11,29 @@ int main()
 	int i;
 	int ret;
 	void *data;
-	struct list *list;
-	struct list_elmt *element;
+	struct clist *list;
+	struct clist_elmt *element;
 
 	/* create a null list */
-	list = (struct list *)malloc(sizeof(struct list));
+	list = (struct clist *)malloc(sizeof(struct clist));
 	if (!list)
 		return -1;
-	list_init(list, data_destroy);
+	clist_init(list, data_destroy);
 
 	/* add element to list */
-	element = list_head(list);
+	element = clist_head(list);
 	for (i = 0; i < 5; i++) {
 		data = (void *)malloc(sizeof(int));
 		if (!data)
 			return -1;
 
 		*(int *)data = i;
-		ret = list_ins_next(list, element, data);
+		ret = clist_ins_next(list, element, data);
 		if (ret == 0) {
 			if (!element)
-				element = list_head(list);
+				element = clist_head(list);
 			else
-				element = list_next(element);
+				element = clist_next(element);
 		} else {
 			printf("err:%d ret=%d\n", __LINE__, ret);
 			return ret;
@@ -41,14 +41,14 @@ int main()
 	}
 
 	/* print all elements' data */
-	element = list_head(list);
-	for (i = 0; i < list_size(list); i++) {
+	element = clist_head(list);
+	for (i = 0; i < clist_size(list); i++) {
 		printf("%d\n", *(int *)element->data);
 		element = element->next;
 	}
 
 	/* destroy list */
-	list_destroy(list);
+	clist_destroy(list);
 	free(list);
 
 	return 0;

@@ -4,27 +4,29 @@
 #include <stdlib.h>
 
 /* Define a structure for doubly-linked list elements. */
-typedef struct dlist_elmt_ {
+struct dlist_elmt {
 	void *data;
-	struct dlist_elmt_ *prev;
-	struct dlist_elmt_ *next;
-} dlist_elmt;
+	struct dlist_elmt *prev;
+	struct dlist_elmt *next;
+};
 
 /* Define a structure for doubly-linked lists. */
-typedef struct dlist_ {
+struct dlist {
 	int size;
-	int (*match)(const void *key1, const void *key2);
-	void (*destroy)(void *data);
-	dlist_elmt *head;
-	dlist_elmt *tail;
-} dlist;
+	int (*match) (const void *key1, const void *key2);
+	void (*destroy) (void *data);
+	struct dlist_elmt *head;
+	struct dlist_elmt *tail;
+};
 
 /* --------------------------- Public Interface --------------------------- */
-void dlist_init(dlist *list, void (*destroy)(void *data));
-void dlist_destroy(dlist *list);
-int dlist_ins_next(dlist *list, dlist_elmt *element, const void *data);
-int dlist_ins_prev(dlist *list, dlist_elmt *element, const void *data);
-int dlist_remove(dlist *list, dlist_elmt *element, void **data);
+void dlist_init(struct dlist *list, void (*destroy) (void *data));
+void dlist_destroy(struct dlist *list);
+int dlist_ins_next(struct dlist *list, struct dlist_elmt *element,
+		   const void *data);
+int dlist_ins_prev(struct dlist *list, struct dlist_elmt *element,
+		   const void *data);
+int dlist_remove(struct dlist *list, struct dlist_elmt *element, void **data);
 #define dlist_size(list) ((list)->size)
 #define dlist_head(list) ((list)->head)
 #define dlist_tail(list) ((list)->tail)

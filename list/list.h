@@ -4,27 +4,28 @@
 #include <stdlib.h>
 
 /* Define a structure for linked list elements. */
-typedef struct list_elmt_ {
+struct list_elmt {
 	void *data;
-	struct list_elmt_ *next;
+	struct list_elmt *next;
 
-} list_elmt;
+};
 
 /* Define a structure for linked lists. */
-typedef struct list_ {
+struct list {
 	int size;
 	int (*match) (const void *key1, const void *key2);
 	void (*destroy) (void *data);
-	list_elmt *head;
-	list_elmt *tail;
+	struct list_elmt *head;
+	struct list_elmt *tail;
 
-} list;
+};
 
 /* --------------------------- Public Interface --------------------------- */
-void list_init(list * list, void (*destroy) (void *data));
-void list_destroy(list * list);
-int list_ins_next(list * list, list_elmt * element, const void *data);
-int list_rem_next(list * list, list_elmt * element, void **data);
+void list_init(struct list *list, void (*destroy) (void *data));
+void list_destroy(struct list *list);
+int list_ins_next(struct list *list, struct list_elmt *element,
+		  const void *data);
+int list_rem_next(struct list *list, struct list_elmt *element, void **data);
 #define list_size(list) ((list)->size)
 #define list_head(list) ((list)->head)
 #define list_tail(list) ((list)->tail)

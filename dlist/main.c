@@ -11,11 +11,11 @@ int main()
 	int i;
 	int ret;
 	void *data;
-	dlist *list;
-	dlist_elmt *element;
+	struct dlist *list;
+	struct dlist_elmt *element;
 
 	/* create a null list */
-	list = (dlist *)malloc(sizeof(dlist));
+	list = (struct dlist *)malloc(sizeof(struct dlist));
 	if (!list)
 		return -1;
 	dlist_init(list, data_destroy);

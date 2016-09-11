@@ -7,18 +7,17 @@
 struct list_elmt {
 	void *data;
 	struct list_elmt *next;
-
 };
 
 /* Define a structure for linked lists. */
-struct list {
+typedef struct list {
 	int size;
 	int (*match) (const void *key1, const void *key2);
 	void (*destroy) (void *data);
 	struct list_elmt *head;
 	struct list_elmt *tail;
 
-};
+} slist;
 
 /* --------------------------- Public Interface --------------------------- */
 void list_init(struct list *list, void (*destroy) (void *data));

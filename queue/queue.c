@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "queue.h"
 
-int queue_enqueue(Queue * queue, const void *data)
+int queue_enqueue(queue * queue, const void *data)
 {
 	/* Enqueue the data. */
 	return list_ins_next(queue, list_tail(queue), data);

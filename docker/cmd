@@ -1,0 +1,2 @@
+docker run -it --rm --user $UID:$(id -g $UID) -v ~/mywork:/mnt debian bash -c 'ls'
+docker run -it --rm --user $(id -u):$(id -g) -v ~/mywork:/mnt debian bash -c 'ls'
